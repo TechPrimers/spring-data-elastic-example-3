@@ -1,5 +1,6 @@
 package com.techprimers.elastic.load;
 
+import com.techprimers.elastic.jparepository.UserJpaRepository;
 import com.techprimers.elastic.model.Users;
 import com.techprimers.elastic.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,20 @@ public class Loaders {
     @Autowired
     UsersRepository usersRepository;
 
+    @Autowired
+    UserJpaRepository userJpaRepository;
+
     @PostConstruct
     @Transactional
     public void loadAll(){
 
         operations.putMapping(Users.class);
         System.out.println("Loading Data");
-        usersRepository.save(getData());
+        List<Users> data = getData();
+        userJpaRepository.save(data); //saves to H2 DB
+
+        List<Users> usersList = userJpaRepository.findAll(); //Get from H2 DB
+        usersRepository.save(usersList); //loads into Elastic
         System.out.printf("Loading Completed");
 
     }

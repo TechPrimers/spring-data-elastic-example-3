@@ -7,11 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.io.File;
 import java.io.IOException;
 
 @Configuration
+@EnableJpaRepositories(basePackages = "com.techprimers.elastic.jparepository")
 @EnableElasticsearchRepositories(basePackages = "com.techprimers.elastic.repository")
 public class ElasticConfiguration {
 
